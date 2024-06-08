@@ -8,6 +8,9 @@ export default {
     extend: {
       fontFamily: {
         "inter": ['Inter', 'sans-serif']
+      },
+      backgroundImage: {
+        'auth-bg': "url('/auth-bg.svg')",
       }
     },
   },
