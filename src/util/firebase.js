@@ -1,14 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-​​import {
-    ​​  GoogleAuthProvider,
-    ​​  getAuth,
-    ​​  signInWithPopup,
-    ​​  signInWithEmailAndPassword,
-    ​​  createUserWithEmailAndPassword,
-    ​​  sendPasswordResetEmail,
-    ​​  signOut,
-    ​​} from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  getAuth,
+  signOut,
+} from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -24,41 +21,24 @@ const firebaseConfig = {
   appId: "1:271498666029:web:4f5aea93cb0253324058a4",
   measurementId: "G-8JXBW4DPJ0",
 };
-
+const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
-const signInWithGoogle = async () => {
-  try {
-    const res = await signInWithPopup(auth, googleProvider);
-    const user = res.user;
-    const q = query(collection(db, "users"), where("uid", "==", user.uid));
-    const docs = await getDocs(q);
-    if (docs.docs.length === 0) {
-      await addDoc(collection(db, "users"), {
-        uid: user.uid,
-        name: user.displayName,
-        authProvider: "google",
-        email: user.email,
-      });
-    }
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
-  }
-};
+// const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+
+// whenever a user interacts with the provider, we force them to select an account
+provider.setCustomParameters({
+  prompt: "select_account",
+});
+
+const signInWithGoogle = () => signInWithPopup(auth, provider);
 
 // function for logging users out
 const logout = () => {
-    signOut(auth);
-  };
+  signOut(auth);
+};
 
-export {
-    auth,
-    db,
-    signInWithGoogle,
-}
+export { auth, signInWithGoogle, logout };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
