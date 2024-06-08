@@ -2,11 +2,31 @@ import React from "react";
 import logo from "../../assets/logo.png";
 import googleIcon from "../../assets/Google.svg";
 import { signInWithGoogle } from "../../util/firebase";
+import { useNavigate } from "react-router-dom";
+import { Alert, AlertTitle } from "@mui/material";
 
 const Auth = () => {
+  const navigate = useNavigate();
+
   const logGoogleUser = async () => {
-    const response = await signInWithGoogle();
-    console.log(response);
+    try {
+      const response = await signInWithGoogle();
+      <Alert severity="success">
+        <AlertTitle>Login success</AlertTitle>
+        welcome to forge scheduler.
+      </Alert>;
+      navigate("/app");
+      //set setisLoading with a timer of 5 secs
+      sessionStorage.setItem(
+        "Auth Token",
+        response._tokenResponse.refreshToken
+      );
+    } catch (error) {
+      <Alert severity="error">
+        <AlertTitle>Error</AlertTitle>
+        This is an error Alert with a scary title.
+      </Alert>;
+    }
   };
   return (
     <div className="flex justify-center m-auto h-screen">

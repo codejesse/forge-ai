@@ -6,12 +6,9 @@ import {
   getAuth,
   signOut,
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
   authDomain: "forge-ai-d8df1.firebaseapp.com",
@@ -23,7 +20,7 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-// const db = getFirestore(app);
+const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
 // whenever a user interacts with the provider, we force them to select an account
@@ -38,7 +35,7 @@ const logout = () => {
   signOut(auth);
 };
 
-export { auth, signInWithGoogle, logout };
+export { auth, signInWithGoogle, db, logout };
 
 // Initialize Firebase
 const analytics = getAnalytics(app);
