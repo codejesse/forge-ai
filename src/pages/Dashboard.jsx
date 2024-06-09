@@ -49,8 +49,16 @@ const Dashboard = () => {
     };
   }, []);
   return (
-    <div>
-      <p>Welome {userName}</p>
+    <div className="border w-fit">
+      <div className="border">
+        <div className="flex flex-col">
+          <h2 className="font-inter font-regular text-[40px]">Dashboard</h2>
+          <p className="font-inter font-light text-[#92959E]">
+            Lets get started with your new schedule
+          </p>
+        </div>
+      </div>
+      <p>Welcome {userName}</p>
     </div>
   );
 };

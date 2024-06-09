@@ -30,7 +30,7 @@ const Auth = () => {
   };
   return (
     <div className="flex justify-center m-auto h-screen">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 p-12 border m-auto bg-white w-fit rounded-[40px] bg-auth-bg bg-no-repeat bg-bottom-left h-[400px]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 p-12 border m-auto bg-white w-fit rounded-[40px] bg-auth-bg bg-no-repeat h-[400px] bg-[bottom_left_0rem]">
         <div className="flex flex-col">
           <img className="w-40 ml-[-20px]" src={logo} alt="forge-logo" />
           <h2 className="font-inter font-medium text-[35px]">Sign in</h2>

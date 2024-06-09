@@ -5,6 +5,8 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Auth from "./pages/Auth/Auth.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import SideNav from "./components/SideNav.jsx";
+import TopNav from "./components/TopNav.jsx";
 
 const router = createBrowserRouter([
   {
@@ -13,12 +15,16 @@ const router = createBrowserRouter([
   },
   {
     path: "/app",
-    element: <Dashboard />
-  }
+    element: <Dashboard />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <div className="flex flex-row">
+      <SideNav />
+      <TopNav />
+      <RouterProvider router={router} />
+    </div>
   </React.StrictMode>
 );
