@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../util/firebase";
 import { db } from "../util/firebase";
+import { KeyOutlined } from "@mui/icons-material";
+import AddKeyBanner from "../components/AddKeyBanner";
 
 const Dashboard = () => {
   const [userName, setUserName] = useState("");
@@ -49,11 +51,11 @@ const Dashboard = () => {
     };
   }, []);
   return (
-    <div className="ml-80">
-      <div className="border w-full">
+    <div className="ml-80 mr-10 mt-8">
+      <div className="w-full">
         <main className="main flex flex-grow flex-col transition-all duration-150 ease-in md:ml-0">
           <div className="p-3">
-            <div className="bg-white w-full">testing...</div>
+            <AddKeyBanner />
           </div>
         </main>
       </div>

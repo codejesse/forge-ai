@@ -13,7 +13,7 @@ const TopNav = () => {
   }, []);
 
   return (
-    <div className="pt-8 ml-80">
+    <div className="pt-8 ml-80 mr-10">
       <div className="bg-none">
         <div className="flex-col flex">
           <div className="w-full">
