@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../util/firebase";
 import { Link } from "react-router-dom";
+import { KeyOutlined } from "@mui/icons-material";
+import AddKeyModal from "./AddKeyModal";
 
 const TopNav = () => {
   const [user, setUser] = useState({});
@@ -13,7 +15,7 @@ const TopNav = () => {
   }, []);
 
   return (
-    <div className="pt-8 ml-80 mr-10">
+    <div className="pt-8 ml-72 mr-10">
       <div className="bg-none">
         <div className="flex-col flex">
           <div className="w-full">
@@ -29,12 +31,17 @@ const TopNav = () => {
               <div className="lg:block mr-auto ml-40 hidden relative max-w-xs"></div>
               <div className="md:space-x-6 justify-end items-center ml-auto flex space-x-3">
                 <div className="justify-center items-center flex relative">
+                  <div className="mr-8">
+                    <AddKeyModal />
+                  </div>
                   <img
                     className="object-cover btn- h-9 w-9 rounded-full mr-2 bg-gray-300"
                     src={user?.photoURL}
                     alt=""
                   />
-                  <p className="hidden font-semibold text-sm">{user.displayName}</p>
+                  <p className="hidden font-semibold text-sm">
+                    {user.displayName}
+                  </p>
                 </div>
               </div>
             </div>
