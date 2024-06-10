@@ -48,23 +48,22 @@ export default function AddKeyModal() {
                 leaveFrom="opacity-100 transform-[scale(100%)]"
                 leaveTo="opacity-0 transform-[scale(95%)]"
               >
-                <DialogPanel className="w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl">
+                <DialogPanel className="w-full max-w-lg rounded-xl bg-white p-6 backdrop-blur-2xl">
                   <DialogTitle
-                    as="h3"
-                    className="text-base/7 font-medium text-white"
+                    as="h2"
+                    className="text-[30px] font-inter font-medium text-black"
                   >
-                    Payment successful
+                    Add api key
                   </DialogTitle>
-                  <p className="mt-2 text-sm/6 text-white/50">
-                    Your payment has been successfully submitted. We’ve sent you
-                    an email with all of the details of your order.
+                  <p className="mt-2 font-inter text-sm/6 text-[#92959E]">
+                    You can add your own gemini api key to keep the app working
                   </p>
                   <div className="mt-4">
                     <Button
-                      className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                      className="text-center gap-2 rounded-full bg-[#0B4AEB] w-full py-1.5 px-3 text-sm/6 text-white font-inter font-normal"
                       onClick={close}
                     >
-                      Got it, thanks!
+                     Update api key
                     </Button>
                   </div>
                 </DialogPanel>
