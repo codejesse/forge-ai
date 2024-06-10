@@ -48,7 +48,6 @@ export default function AddKeyModal() {
       if (user) {
         const uid = user.uid;
         setUserId(uid);
-        console.log(uid);
       } else {
         console.log("user is logged out");
       }
@@ -57,7 +56,6 @@ export default function AddKeyModal() {
 
   //function to handle api key submission
   const handleSubmit = async (e) => {
-    // create api key document or update existing for particular user
     e.preventDefault();
     setIsLoading(true);
     setError(null);
