@@ -8,6 +8,8 @@ import {
 } from "@headlessui/react";
 import { KeyRounded } from "@mui/icons-material";
 import { useState } from "react";
+import { Description, Field, Input, Label } from "@headlessui/react";
+import clsx from "clsx";
 
 export default function AddKeyModal() {
   let [isOpen, setIsOpen] = useState(false);
@@ -22,12 +24,6 @@ export default function AddKeyModal() {
 
   return (
     <>
-      {/* <Button
-        onClick={open}
-        className="rounded-md bg-black/20 py-2 px-4 text-sm font-medium text-white focus:outline-none data-[hover]:bg-black/30 data-[focus]:outline-1 data-[focus]:outline-white"
-      >
-        Open dialog
-      </Button> */}
       <KeyRounded className="cursor-pointer" onClick={open} />
 
       <Transition appear show={isOpen}>
@@ -58,12 +54,23 @@ export default function AddKeyModal() {
                   <p className="mt-2 font-inter text-sm/6 text-[#92959E]">
                     You can add your own gemini api key to keep the app working
                   </p>
+                  <div className="w-full max-w-lg">
+                    <Field>
+                      <Input
+                        placeholder="Enter api key"
+                        className={clsx(
+                          "mt-3 block w-full rounded-lg border bg-white py-1.5 px-3 text-sm/6 text-black",
+                          "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+                        )}
+                      />
+                    </Field>
+                  </div>
                   <div className="mt-4">
                     <Button
                       className="text-center gap-2 rounded-full bg-[#0B4AEB] w-full py-1.5 px-3 text-sm/6 text-white font-inter font-normal"
                       onClick={close}
                     >
-                     Update api key
+                      Update api key
                     </Button>
                   </div>
                 </DialogPanel>
