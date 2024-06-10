@@ -17,6 +17,7 @@ import AddKeyBanner from "../components/AddKeyBanner";
 const Dashboard = () => {
   const [userName, setUserName] = useState("");
   const navigate = useNavigate();
+  
   useEffect(() => {
     let authToken = sessionStorage.getItem("Auth Token");
 
@@ -25,7 +26,7 @@ const Dashboard = () => {
     }
 
     if (!authToken) {
-      navigate("/signin");
+      navigate("/");
       //   message("Please login");
     }
 
@@ -37,7 +38,7 @@ const Dashboard = () => {
         setUserName(userName);
       } else {
         console.log("user is logged out");
-        navigate("/signin");
+        navigate("/");
       }
     });
 
@@ -46,6 +47,7 @@ const Dashboard = () => {
       const userData = {
         uid,
         email: user.email,
+        api_key: ""
       };
       await setDoc(userRef, userData);
     };
@@ -58,7 +60,7 @@ const Dashboard = () => {
             <AddKeyBanner />
             <div className="bg-white mt-5 rounded-[30px]">
               <div className="p-10">
-                <h1 className="font-inter font-semibold text-[40px]">
+                <h1 className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text font-inter font-semibold text-[40px]">
                   Hello, {userName}
                 </h1>
                 <h1 className="font-inter font-medium text-[35px] text-[#C4C4C4]">
@@ -94,7 +96,7 @@ const Dashboard = () => {
                 </div>
               </div>
               {/* Input for prompting */}
-              <div className="p-8 mt-[-25px]">
+              <div className="p-8 mt-[-20px]">
                 <input
                   className="bg-[#F8F9FC] font-inter text-[14px] p-5 w-full rounded-full"
                   placeholder="Enter what needs to be scheduled"

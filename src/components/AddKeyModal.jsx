@@ -7,12 +7,28 @@ import {
   TransitionChild,
 } from "@headlessui/react";
 import { KeyRounded } from "@mui/icons-material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Description, Field, Input, Label } from "@headlessui/react";
 import clsx from "clsx";
+import {
+  addDoc,
+  collection,
+  doc,
+  setDoc,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "../util/firebase";
+import { auth } from "../util/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { set } from "firebase/database";
 
 export default function AddKeyModal() {
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [input, setInput] = useState("");
+  const [userId, setUserId] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   function open() {
     setIsOpen(true);
@@ -21,6 +37,43 @@ export default function AddKeyModal() {
   function close() {
     setIsOpen(false);
   }
+
+  //function to handle user input
+  const handleInput = (e) => {
+    setInput(e.target.value);
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        setUserId(uid);
+        console.log(uid);
+      } else {
+        console.log("user is logged out");
+      }
+    });
+  }, []);
+
+  //function to handle api key submission
+  const handleSubmit = async (e) => {
+    // create api key document or update existing for particular user
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const userRef = doc(db, "users", userId); // Reference the document
+      await updateDoc(userRef, { api_key: input }); // Update the name field
+      setInput(""); // Clear the form after successful update
+      close();
+    } catch (err) {
+      console.error("Error updating api_key:", err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -49,15 +102,18 @@ export default function AddKeyModal() {
                     as="h2"
                     className="text-[30px] font-inter font-medium text-black"
                   >
-                    Add api key
+                    Add Api Key
                   </DialogTitle>
                   <p className="mt-2 font-inter text-sm/6 text-[#92959E]">
                     You can add your own gemini api key to keep the app working
                   </p>
-                  <div className="w-full max-w-lg">
+                  <div className="w-full max-w-lg pb-10">
                     <Field>
                       <Input
                         placeholder="Enter api key"
+                        required
+                        onChange={handleInput}
+                        value={input}
                         className={clsx(
                           "mt-3 block w-full rounded-lg border bg-white py-1.5 px-3 text-sm/6 text-black",
                           "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
@@ -68,7 +124,7 @@ export default function AddKeyModal() {
                   <div className="mt-4">
                     <Button
                       className="text-center gap-2 rounded-full bg-[#0B4AEB] w-full py-1.5 px-3 text-sm/6 text-white font-inter font-normal"
-                      onClick={close}
+                      onClick={handleSubmit}
                     >
                       Update api key
                     </Button>
