@@ -8,13 +8,14 @@ import {
 } from "@headlessui/react";
 import { KeyRounded } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { Description, Field, Input, Label } from "@headlessui/react";
+import { Field, Input } from "@headlessui/react";
 import clsx from "clsx";
 import {
   addDoc,
   collection,
   doc,
   setDoc,
+  getDoc,
   getFirestore,
   updateDoc,
 } from "firebase/firestore";
@@ -25,7 +26,7 @@ import { set } from "firebase/database";
 
 export default function AddKeyModal() {
   const [isOpen, setIsOpen] = useState(false);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState("shit");
   const [userId, setUserId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -44,26 +45,43 @@ export default function AddKeyModal() {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const checkUser = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
-        setUserId(uid);
+        setUserId(user.uid);
       } else {
         console.log("user is logged out");
       }
     });
-  }, []);
 
-  //function to handle api key submission
+    return checkUser;
+  }, [auth]);
+
+  // Function to handle API key submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
 
+    const userInput = input;
+
     try {
-      const userRef = doc(db, "users", userId); // Reference the document
-      await updateDoc(userRef, { api_key: input }); // Update the name field
-      setInput(""); // Clear the form after successful update
+      if (!userId) {
+        console.error("User not logged in");
+        return;
+      }
+
+      const userRef = doc(db, "users", userId);
+      const docSnap = await getDoc(userRef);
+      const currentApiKey = docSnap.exists ? docSnap.data().api_key : "";
+
+      console.log("Current API Key:", currentApiKey);
+      console.log("User Input:", userInput);
+
+      if (userInput !== currentApiKey) {
+        await updateDoc(userRef, { api_key: userInput || "test" });
+      }
+      setInput("");
+      console.log("testing...");
       close();
     } catch (err) {
       console.error("Error updating api_key:", err);
@@ -121,6 +139,7 @@ export default function AddKeyModal() {
                   </div>
                   <div className="mt-4">
                     <Button
+                      disabled={!input}
                       className="text-center gap-2 rounded-full bg-[#0B4AEB] w-full py-1.5 px-3 text-sm/6 text-white font-inter font-normal"
                       onClick={handleSubmit}
                     >

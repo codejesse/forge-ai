@@ -1,5 +1,5 @@
 import React from "react";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import {
   addDoc,
   collection,
@@ -11,13 +11,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../util/firebase";
 import { db } from "../util/firebase";
-import { KeyOutlined } from "@mui/icons-material";
 import AddKeyBanner from "../components/AddKeyBanner";
 
 const Dashboard = () => {
   const [userName, setUserName] = useState("");
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     let authToken = sessionStorage.getItem("Auth Token");
 
@@ -47,7 +46,7 @@ const Dashboard = () => {
       const userData = {
         uid,
         email: user.email,
-        api_key: ""
+        api_key,
       };
       await setDoc(userRef, userData);
     };

@@ -37,10 +37,10 @@ const TopNav = () => {
                   <img
                     className="object-cover btn- h-9 w-9 rounded-full mr-2 bg-gray-300"
                     src={user?.photoURL}
-                    alt=""
+                    alt="user-image"
                   />
                   <p className="hidden font-semibold text-sm">
-                    {user.displayName}
+                    {user?.displayName}
                   </p>
                 </div>
               </div>
