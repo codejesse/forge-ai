@@ -26,7 +26,7 @@ import { set } from "firebase/database";
 
 export default function AddKeyModal() {
   const [isOpen, setIsOpen] = useState(false);
-  const [input, setInput] = useState("shit");
+  const [input, setInput] = useState("");
   const [userId, setUserId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
