@@ -81,7 +81,7 @@ export default function AddKeyModal() {
         await updateDoc(userRef, { api_key: userInput || "test" });
       }
       setInput("");
-      console.log("testing...");
+      setIsLoading(true);
       close();
     } catch (err) {
       console.error("Error updating api_key:", err);
@@ -143,7 +143,7 @@ export default function AddKeyModal() {
                       className="text-center gap-2 rounded-full bg-[#0B4AEB] w-full py-1.5 px-3 text-sm/6 text-white font-inter font-normal"
                       onClick={handleSubmit}
                     >
-                      Update api key
+                      {isLoading ? "Loading..." : "Update api key"}
                     </Button>
                   </div>
                 </DialogPanel>

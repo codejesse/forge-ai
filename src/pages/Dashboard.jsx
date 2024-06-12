@@ -83,6 +83,8 @@ const Dashboard = () => {
     // logic goes here
   }
 
+  console.log(promptInput)
+
   return (
     <div className="ml-72 mr-10 mt-8">
       <div className="w-full">
