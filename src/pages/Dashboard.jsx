@@ -16,7 +16,39 @@ import AddKeyBanner from "../components/AddKeyBanner";
 const Dashboard = () => {
   const [userName, setUserName] = useState("");
   const [promptInput, setPromptInput] = useState("");
+  const [selectedPromptId, setSelectedPromptId] = useState(null);
   const navigate = useNavigate();
+
+  // define pre-defined prompts
+  const preDefinedPrompts = [
+    {
+      id: 1,
+      text: "I have a test to prepare for next week Monday give me a schedule with these courses and their intensity...",
+    },
+    {
+      id: 2,
+      text: "I have a test to prepare for next week Monday give me a schedule with these courses and their intensity...",
+    },
+    {
+      id: 3,
+      text: "I have a test to prepare for next week Monday give me a schedule with these courses and their intensity...",
+    },
+    {
+      id: 4,
+      text: "Me have a test to prepare for next week Monday give me a schedule with these courses and their intensity...",
+    },
+  ];
+
+  const handlePromptSelection = (prompt) => {
+    if (selectedPromptId === prompt.id) {
+      // Unselect if clicking the same selected prompt
+      setPromptInput("");
+      setSelectedPromptId(null);
+    } else {
+      setPromptInput(prompt.text);
+      setSelectedPromptId(prompt.id);
+    }
+  };
 
   useEffect(() => {
     let authToken = sessionStorage.getItem("Auth Token");
@@ -81,9 +113,7 @@ const Dashboard = () => {
 
   const handleScheduleCreation = () => {
     // logic goes here
-  }
-
-  console.log(promptInput)
+  };
 
   return (
     <div className="ml-72 mr-10 mt-8">
@@ -103,30 +133,21 @@ const Dashboard = () => {
               {/* Example prompts */}
               {/* CHORE: make this resuable and once clicked pushed to prompt-state allowing the user modify and send as prompt */}
               <div className="grid grid-cols-4 gap-4 p-8 m-auto">
-                <div className="bg-[#F8F9FC] rounded-[15px] p-6 h-[240px]">
-                  <p className="font-inter font-light text-[15px] w-full">
-                    I have a test to prepare for next week Monday give me a
-                    schedule with these courses and their intensity...
-                  </p>
-                </div>
-                <div className="bg-[#F8F9FC] rounded-[15px] p-6 h-[240px]">
-                  <p className="font-inter font-light text-[15px] w-full">
-                    I have a test to prepare for next week Monday give me a
-                    schedule with these courses and their intensity...
-                  </p>
-                </div>
-                <div className="bg-[#F8F9FC] rounded-[15px] p-6 h-[240px]">
-                  <p className="font-inter font-light text-[15px] w-full">
-                    I have a test to prepare for next week Monday give me a
-                    schedule with these courses and their intensity...
-                  </p>
-                </div>
-                <div className="bg-[#F8F9FC] rounded-[15px] p-6 h-[240px]">
-                  <p className="font-inter font-light text-[15px] w-full">
-                    I have a test to prepare for next week Monday give me a
-                    schedule with these courses and their intensity...
-                  </p>
-                </div>
+                {preDefinedPrompts.map((prompt) => (
+                  <div
+                    key={prompt.id || Math.random()}
+                    onClick={() => handlePromptSelection(prompt)}
+                    className={`bg-[#F8F9FC] rounded-[15px] p-6 h-[240px] cursor-pointer ${
+                      selectedPromptId === prompt.id
+                        ? "bg-blue-500 text-white"
+                        : "bg-white text-gray-800"
+                    }`}
+                  >
+                    <p className="font-inter font-light text-[15px] w-full">
+                      {prompt.text}
+                    </p>
+                  </div>
+                ))}
               </div>
               {/* Input for prompting */}
               <div className="p-8 mt-[-20px]">
