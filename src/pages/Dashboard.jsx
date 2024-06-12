@@ -140,7 +140,7 @@ const Dashboard = () => {
                     className={`bg-[#F8F9FC] rounded-[15px] p-6 h-[240px] cursor-pointer ${
                       selectedPromptId === prompt.id
                         ? "bg-blue-500 text-white"
-                        : "bg-white text-gray-800"
+                        : "bg-[#F8F9FC] text-gray-800"
                     }`}
                   >
                     <p className="font-inter font-light text-[15px] w-full">
