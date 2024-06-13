@@ -14,10 +14,20 @@ import { db } from "../util/firebase";
 import AddKeyBanner from "../components/AddKeyBanner";
 import { SendOutlined } from "@mui/icons-material";
 
+//gemini stuff
+import { GoogleGenerativeAI } from "@google/generative-ai";
+// import.meta.env.VITE_GEMINI_KEY
+
 const Dashboard = () => {
   const [userName, setUserName] = useState("");
   const [promptInput, setPromptInput] = useState("");
   const [selectedPromptId, setSelectedPromptId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [aiResponse, setResponse] = useState("");
+
+  //gemini api key
+  const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_KEY);
+
   const navigate = useNavigate();
 
   // define pre-defined prompts
@@ -85,6 +95,21 @@ const Dashboard = () => {
     };
   }, []);
 
+  //gemini prompt
+  async function aiRun() {
+    setIsLoading(true);
+    setResponse('');
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const prompt = `You are a time management expert and you are to create a schedule timeline based on ${promptInput} with an event name, event date, start time and ending time`;
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const text = response.text();
+    setResponse(text);
+    setIsLoading(false);
+}
+
+
+
   /* CHORES:
   1. Prompt: take users prompt from input field
   2. Pre-defined prompt: when users click on a pre-defined prompt this should update the state with that data ✅
@@ -113,7 +138,10 @@ const Dashboard = () => {
 
   const handleScheduleCreation = () => {
     // logic goes here
+    aiRun();
   };
+
+  console.log(aiResponse);
 
   return (
     <div className="ml-72 mr-10 mt-8">
@@ -158,7 +186,7 @@ const Dashboard = () => {
                   placeholder="Enter what needs to be scheduled"
                   type="text"
                 />
-                {promptInput ? <SendOutlined className="absolute m-3" /> : ""}
+                {promptInput ? <SendOutlined onClick={() => handleScheduleCreation()} className="absolute m-3" /> : ""}
               </div>
             </div>
           </div>
