@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../util/firebase";
 import { db } from "../util/firebase";
 import AddKeyBanner from "../components/AddKeyBanner";
+import { SendOutlined } from "@mui/icons-material";
 
 const Dashboard = () => {
   const [userName, setUserName] = useState("");
@@ -41,7 +42,6 @@ const Dashboard = () => {
 
   const handlePromptSelection = (prompt) => {
     if (selectedPromptId === prompt.id) {
-      // Unselect if clicking the same selected prompt
       setPromptInput("");
       setSelectedPromptId(null);
     } else {
@@ -87,7 +87,7 @@ const Dashboard = () => {
 
   /* CHORES:
   1. Prompt: take users prompt from input field
-  2. Pre-defined prompt: when users click on a pre-defined prompt this should update the state with that data
+  2. Pre-defined prompt: when users click on a pre-defined prompt this should update the state with that data ✅
   3. Schedule creation: on submission of prompt
        i. run the current prompt with the gemini api logic
        ii. grab the response and create a firebase firestore document 
@@ -143,7 +143,7 @@ const Dashboard = () => {
                         : "bg-[#F8F9FC] text-gray-800"
                     }`}
                   >
-                    <p className="font-inter font-light text-[15px] w-full">
+                    <p className="font-inter font-light text-[15px] w-full text-ellipsis overflow-hidden ...">
                       {prompt.text}
                     </p>
                   </div>
@@ -158,6 +158,7 @@ const Dashboard = () => {
                   placeholder="Enter what needs to be scheduled"
                   type="text"
                 />
+                {promptInput ? <SendOutlined className="absolute m-3" /> : ""}
               </div>
             </div>
           </div>
