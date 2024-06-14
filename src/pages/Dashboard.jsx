@@ -95,20 +95,56 @@ const Dashboard = () => {
     };
   }, []);
 
+  //gemini schema: chore: further fine-tunining
+  const schema = `
+    {...}
+  `
+
   //gemini prompt
-  async function aiRun() {
+  const si = `
+       You are a time management expert and you are to create a schedule timeline based on ${promptInput}.
+       your response will be used to create a firebase document and then into the reactjs fullcalender draggeable calender timeline so therefore your response must be valid JSON that can be used in firebase firestore documents it must have the following schema:
+       
+       * Event name: Name of the event based on the context of ${promptInput}
+       * Event date: date of the event from current day in MM/DD/YY format
+       * Event description: a short description of what is to be done be based on ${promptInput} for each event
+       * Event start: the time the event will start
+       * Event end: the time the event will end
+       `;
+  const model = genAI.getGenerativeModel(
+    {
+      model: "gemini-1.5-pro-latest",
+      systemInstruction: {
+        parts: [{ text: si }],
+        role: "model",
+      },
+    },
+    { apiVersion: "v1beta" }
+  );
+
+  async function aiRun(text) {
     setIsLoading(true);
-    setResponse('');
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    const prompt = `You are a time management expert and you are to create a schedule timeline based on ${promptInput} with an event name, event date, start time and ending time`;
-    const result = await model.generateContent(prompt);
+    setResponse("");
+
+    const generationConfig = {
+      temperature: 0.9,
+      topK: 1,
+      topP: 1,
+      maxOutputTokens: 2048,
+      response_mime_type: "application/json",
+    };
+
+    const parts = [{ text }];
+
+    const result = await model.generateContent({
+      contents: [{ role: "user", parts }],
+      generationConfig,
+    });
+    
     const response = result.response;
-    const text = response.text();
-    setResponse(text);
+    setResponse({ response });
     setIsLoading(false);
-}
-
-
+  }
 
   /* CHORES:
   1. Prompt: take users prompt from input field
@@ -138,7 +174,7 @@ const Dashboard = () => {
 
   const handleScheduleCreation = () => {
     // logic goes here
-    aiRun();
+    aiRun(promptInput);
   };
 
   console.log(aiResponse);
@@ -186,7 +222,14 @@ const Dashboard = () => {
                   placeholder="Enter what needs to be scheduled"
                   type="text"
                 />
-                {promptInput ? <SendOutlined onClick={() => handleScheduleCreation()} className="absolute m-3" /> : ""}
+                {promptInput ? (
+                  <SendOutlined
+                    onClick={() => handleScheduleCreation()}
+                    className="absolute m-3"
+                  />
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>
