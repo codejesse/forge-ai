@@ -207,7 +207,7 @@ const Dashboard = () => {
 
     //store data in firebase
     const collectionRef = collection(db, "schedules");
-    const data = response.candidates[0].content.parts[0].text
+    const data = JSON.parse(response.candidates[0].content.parts[0].text)
 
     try {
       await addDoc(collectionRef, data);
