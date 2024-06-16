@@ -16,6 +16,7 @@ import { SendOutlined } from "@mui/icons-material";
 
 //gemini stuff
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import Loader from "../components/Loader";
 // import.meta.env.VITE_GEMINI_KEY
 
 const Dashboard = () => {
@@ -69,7 +70,7 @@ const Dashboard = () => {
 
     if (!authToken) {
       navigate("/");
-      //   message("Please login");
+      console.log("Please login");
     }
 
     onAuthStateChanged(auth, (user) => {
@@ -97,14 +98,72 @@ const Dashboard = () => {
 
   //gemini schema: chore: further fine-tunining
   const schema = `
-    {...}
-  `
+  {
+    "description": "Event schedule information",
+    "type": "object",
+    "properties": {
+      "scheduleTitle": {
+        "type": "string",
+        "description": "Title of the event schedule"
+      },
+      "eventDate": {
+        "type": "string",
+        "description": "Date of the event schedule in YYYY-MM-DD format"
+      },
+      "events": {
+        "type": "array",
+        "description": "Array of event objects",
+        "items": {
+          "type": "object",
+          "properties": {
+            "eventName": {
+              "type": "string",
+              "description": "Name of the event"
+            },
+            "eventStart": {
+              "type": "string",
+              "description": "Start time of the event in HH:MM format (24-hour clock)"
+            },
+            "eventEnd": {
+              "type": "string",
+              "description": "End time of the event in HH:MM format (24-hour clock)"
+            },
+            "eventDescription": {
+              "type": "string",
+              "description": "Description of the event"
+            },
+            "eventProgress": {
+              "type": "number",
+              "description": "Progress of the event (between 0 and 1)"
+            },
+            "eventCompleted": {
+              "type": "boolean",
+              "description": "Boolean indicating if the event is completed"
+            }
+          },
+          "required": [
+            "eventName",
+            "eventStart",
+            "eventEnd"
+          ]
+        }
+      }
+    },
+    "required": [
+      "scheduleTitle",
+      "eventDate",
+      "events"
+    ]
+  }
+  
+  `;
 
   //gemini prompt
   const si = `
        You are a time management expert and you are to create a schedule timeline based on ${promptInput}.
        your response will be used to create a firebase document and then into the reactjs fullcalender draggeable calender timeline so therefore your response must be valid JSON that can be used in firebase firestore documents it must have the following schema:
        
+       * Title: general title/name of the schedule based on the ${promptInput}
        * Event name: Name of the event based on the context of ${promptInput}
        * Event date: date of the event from current day in MM/DD/YY format
        * Event description: a short description of what is to be done be based on ${promptInput} for each event
@@ -132,6 +191,7 @@ const Dashboard = () => {
       topP: 1,
       maxOutputTokens: 2048,
       response_mime_type: "application/json",
+      responseSchema: JSON.parse(schema),
     };
 
     const parts = [{ text }];
@@ -140,10 +200,25 @@ const Dashboard = () => {
       contents: [{ role: "user", parts }],
       generationConfig,
     });
-    
+
     const response = result.response;
-    setResponse({ response });
-    setIsLoading(false);
+
+    console.log(response.candidates[0].content.parts[0].text);
+
+    //store data in firebase
+    const collectionRef = collection(db, "schedules");
+    const data = response.candidates[0].content.parts[0].text
+
+    try {
+      await addDoc(collectionRef, data);
+      console.log("Document successfully written!");
+      setResponse({ response });
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error writing document: ", error);
+      setResponse({ error: "Failed to store data" });
+      setIsLoading(false);
+    }
   }
 
   /* CHORES:
@@ -177,10 +252,9 @@ const Dashboard = () => {
     aiRun(promptInput);
   };
 
-  console.log(aiResponse);
-
   return (
     <div className="ml-72 mr-10 mt-8">
+      {isLoading ? <Loader /> : ""}
       <div className="w-full">
         <main className="main flex flex-grow flex-col transition-all duration-150 ease-in md:ml-0">
           <div className="p-3">
