@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { logout } from "../util/firebase";
 import { fetchAllSchedules } from "../services/FirestoreService";
+import { ScheduleOutlined } from "@mui/icons-material";
 
 const SideNav = () => {
   const [schedules, setSchedules] = useState([]);
@@ -29,17 +30,26 @@ const SideNav = () => {
         </h4>
         <ul>
           {schedules.map((schedule) => (
-            <div className="hover:bg-[#f8f9fc] rounded-full">
+            <div className="rounded-full">
               {/* {console.log(schedule.id)} */}
-              <Link to={`/schedules/${schedule.id}`}>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "font-inter active:bg-[#f8f9fc] text-black"
+                    : "font-inter bg-none text-gray-500"
+                }
+                to={`/schedules/${schedule.id}`}
+              >
+                {/* <Link to={`/schedules/${schedule.id}`}> */}
                 <li
                   key={schedule.id}
                   className="flex flex-row cursor-pointer text-ellipsis overflow-hidden ..."
                 >
-                  🤞🏾
+                  <ScheduleOutlined />
                   {schedule.scheduleTitle}
                 </li>
-              </Link>
+                {/* </Link> */}
+              </NavLink>
             </div>
           ))}
         </ul>

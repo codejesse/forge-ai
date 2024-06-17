@@ -36,7 +36,11 @@ const SchedulePage = () => {
       <div className="ml-72 mr-10 mt-8">
         <div className="w-full">
           <div className="main flex flex-grow flex-col transition-all duration-150 ease-in md:ml-0">
-            <div className="p-3">schedulepage</div>
+            <div className="p-3">
+                <div className="bg-white mt-5 rounded-[30px]">
+                    schedulepage
+                </div>
+            </div>
           </div>
         </div>
       </div>
