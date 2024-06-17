@@ -3,7 +3,7 @@ import Logo from "../assets/logo.png";
 import { Link, NavLink } from "react-router-dom";
 import { logout } from "../util/firebase";
 import { fetchAllSchedules } from "../services/FirestoreService";
-import { ScheduleOutlined } from "@mui/icons-material";
+import { LogoutRounded, ScheduleOutlined } from "@mui/icons-material";
 
 const SideNav = () => {
   const [schedules, setSchedules] = useState([]);
@@ -53,9 +53,10 @@ const SideNav = () => {
             </div>
           ))}
         </ul>
-        <hr />
-        <p onClick={logout} className="cursor-pointer">
+        <hr className="mt-10" />
+        <p onClick={logout} className="cursor-pointer mt-4">
           {" "}
+          <LogoutRounded />
           logout
         </p>
       </div>

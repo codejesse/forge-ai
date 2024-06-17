@@ -259,65 +259,70 @@ const Dashboard = () => {
 
   return (
     <>
-      <SideNav />
-      <TopNav />
-      <div className="ml-72 mr-10 mt-8">
-        {isLoading ? <Loader /> : ""}
-        <div className="w-full">
-          <main className="main flex flex-grow flex-col transition-all duration-150 ease-in md:ml-0">
-            <div className="p-3">
-              <AddKeyBanner />
-              <div className="bg-white mt-5 rounded-[30px]">
-                <div className="p-10">
-                  <h1 className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text font-inter font-semibold text-[40px]">
-                    Hello, {userName}
-                  </h1>
-                  <h1 className="font-inter font-medium text-[35px] text-[#C4C4C4]">
-                    What are you scheduling today?
-                  </h1>
-                </div>
-                {/* Example prompts */}
-                {/* CHORE: make this resuable and once clicked pushed to prompt-state allowing the user modify and send as prompt */}
-                <div className="grid grid-cols-4 gap-4 p-8 m-auto">
-                  {preDefinedPrompts.map((prompt) => (
-                    <div
-                      key={prompt.id || Math.random()}
-                      onClick={() => handlePromptSelection(prompt)}
-                      className={`bg-[#F8F9FC] rounded-[15px] p-6 h-[240px] cursor-pointer ${
-                        selectedPromptId === prompt.id
-                          ? "bg-blue-500 text-white"
-                          : "bg-[#F8F9FC] text-gray-800"
-                      }`}
-                    >
-                      <p className="font-inter font-light text-[15px] w-full text-ellipsis overflow-hidden ...">
-                        {prompt.text}
-                      </p>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <SideNav />
+          <TopNav />
+          <div className="ml-72 mr-10 mt-8">
+            <div className="w-full">
+              <main className="main flex flex-grow flex-col transition-all duration-150 ease-in md:ml-0">
+                <div className="p-3">
+                  <AddKeyBanner />
+                  <div className="bg-white mt-5 rounded-[30px]">
+                    <div className="p-10">
+                      <h1 className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text font-inter font-semibold text-[40px]">
+                        Hello, {userName}
+                      </h1>
+                      <h1 className="font-inter font-medium text-[35px] text-[#C4C4C4]">
+                        What are you scheduling today?
+                      </h1>
                     </div>
-                  ))}
+                    {/* Example prompts */}
+                    {/* CHORE: make this resuable and once clicked pushed to prompt-state allowing the user modify and send as prompt */}
+                    <div className="grid grid-cols-4 gap-4 p-8 m-auto">
+                      {preDefinedPrompts.map((prompt) => (
+                        <div
+                          key={prompt.id || Math.random()}
+                          onClick={() => handlePromptSelection(prompt)}
+                          className={`bg-[#F8F9FC] rounded-[15px] p-6 h-[240px] cursor-pointer ${
+                            selectedPromptId === prompt.id
+                              ? "bg-blue-500 text-white"
+                              : "bg-[#F8F9FC] text-gray-800"
+                          }`}
+                        >
+                          <p className="font-inter font-light text-[15px] w-full text-ellipsis overflow-hidden ...">
+                            {prompt.text}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                    {/* Input for prompting */}
+                    <div className="p-8 mt-[-20px]">
+                      <input
+                        value={promptInput}
+                        onChange={handlePrompt}
+                        className="bg-[#F8F9FC] font-inter text-[14px] p-5 w-full rounded-full"
+                        placeholder="Enter what needs to be scheduled"
+                        type="text"
+                      />
+                      {promptInput ? (
+                        <SendOutlined
+                          onClick={() => handleScheduleCreation()}
+                          className="absolute m-3"
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
                 </div>
-                {/* Input for prompting */}
-                <div className="p-8 mt-[-20px]">
-                  <input
-                    value={promptInput}
-                    onChange={handlePrompt}
-                    className="bg-[#F8F9FC] font-inter text-[14px] p-5 w-full rounded-full"
-                    placeholder="Enter what needs to be scheduled"
-                    type="text"
-                  />
-                  {promptInput ? (
-                    <SendOutlined
-                      onClick={() => handleScheduleCreation()}
-                      className="absolute m-3"
-                    />
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
+              </main>
             </div>
-          </main>
-        </div>
-      </div>
+          </div>
+        </>
+      )}
     </>
   );
 };
