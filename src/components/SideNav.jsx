@@ -8,6 +8,8 @@ const SideNav = () => {
   const [schedules, setSchedules] = useState([]);
   //   const { pathname } = useLocation();
 
+  console.log(schedules)
+
   useEffect(() => {
     const fetchData = async () => {
       const fetchedSchedules = await fetchAllSchedules();
@@ -28,13 +30,18 @@ const SideNav = () => {
         </h4>
         <ul>
           {schedules.map((schedule) => (
-            <li
-              className="flex flex-row text-ellipsis overflow-hidden ..."
-              key={schedule.id}
-            >
-              🤞🏾
-              {schedule.scheduleTitle}
-            </li>
+            <div className="hover:bg-[#f8f9fc] rounded-full">
+              {/* {console.log(schedule)} */}
+              <Link to={`/schedules/${schedule.id}`}>
+                <li
+                  key={schedule.id}
+                  className="flex flex-row cursor-pointer text-ellipsis overflow-hidden ..."
+                >
+                  🤞🏾
+                  {schedule.scheduleTitle}
+                </li>
+              </Link>
+            </div>
           ))}
         </ul>
         <hr />

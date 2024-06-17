@@ -10,7 +10,9 @@ export async function fetchAllSchedules() {
   try {
     const docsSnap = await getDocs(colRef);
     docsSnap.forEach((doc) => {
-      schedules.push(doc.data());
+      const scheduleData = doc.data();
+      scheduleData.id = doc.id; // Add the ID as a property to the data object
+      schedules.push(scheduleData);
     });
   } catch (error) {
     console.log("Error fetching documents:", error);
