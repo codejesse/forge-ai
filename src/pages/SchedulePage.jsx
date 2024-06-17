@@ -7,6 +7,7 @@ import TopNav from "../components/TopNav";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
+
 const SchedulePage = () => {
   const { documentId } = useParams();
   const [schedule, setSchedule] = useState(null);
@@ -14,6 +15,7 @@ const SchedulePage = () => {
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(null);
 
+  //events will be events from events in schedule document
   const events = [{ title: "Meeting", start: new Date() }];
 
   useEffect(() => {
@@ -50,6 +52,11 @@ const SchedulePage = () => {
                     initialView="dayGridMonth"
                     weekends={false}
                     events={events}
+                    headerToolbar={{
+                      left: "prev,next today",
+                      center: "title",
+                      right: "dayGridMonth,dayGridWeek,dayGridDay",
+                    }}
                     eventContent={renderEventContent}
                   />
                 </div>
