@@ -7,6 +7,7 @@ import TopNav from "../components/TopNav";
 const SchedulePage = () => {
   const { documentId } = useParams();
   const [schedule, setSchedule] = useState(null);
+  const [scheduleTitle, setScheduleTitle] = useState("");
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(null);
 
@@ -16,6 +17,7 @@ const SchedulePage = () => {
       try {
         const fetchedSchedule = await fetchSchedule(documentId);
         setSchedule(fetchedSchedule);
+        setScheduleTitle(fetchedSchedule[0].scheduleTitle);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -25,10 +27,12 @@ const SchedulePage = () => {
     fetchData();
   }, [documentId, fetchSchedule]);
 
+//   console.log(scheduleTitle);
+
   return (
     <>
       <SideNav />
-      <TopNav />
+      <TopNav scheduleTitle={scheduleTitle} />
       <div className="ml-72 mr-10 mt-8">
         <div className="w-full">
           <div className="main flex flex-grow flex-col transition-all duration-150 ease-in md:ml-0">

@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../assets/logo.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { logout } from "../util/firebase";
 import { fetchAllSchedules } from "../services/FirestoreService";
 
 const SideNav = () => {
   const [schedules, setSchedules] = useState([]);
-  //   const { pathname } = useLocation();
-
-  console.log(schedules)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +18,9 @@ const SideNav = () => {
     // <div className={`fixed bg-white flex flex-col w-[250px] p-8 h-screen ${pathname === '/' ? "hidden" : "flex"}`}>
     <div className={`fixed bg-white flex flex-col w-[250px] p-8 h-screen`}>
       <div className="h-fit mx-left">
-        <img className="w-25 h-fit ml-[-13px]" src={Logo} alt="forge-logo" />
+        <Link to="/app">
+          <img className="w-25 h-fit ml-[-13px]" src={Logo} alt="forge-logo" />
+        </Link>
       </div>
       {/* sidenav links */}
       <div className="mt-10">
@@ -31,7 +30,7 @@ const SideNav = () => {
         <ul>
           {schedules.map((schedule) => (
             <div className="hover:bg-[#f8f9fc] rounded-full">
-              {/* {console.log(schedule)} */}
+              {/* {console.log(schedule.id)} */}
               <Link to={`/schedules/${schedule.id}`}>
                 <li
                   key={schedule.id}

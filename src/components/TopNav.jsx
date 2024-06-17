@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { KeyOutlined } from "@mui/icons-material";
 import AddKeyModal from "./AddKeyModal";
 
-const TopNav = () => {
+const TopNav = ({ scheduleTitle }) => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const TopNav = () => {
             <div className="bg-none h-16 justify-between items-center mx-auto px-4 flex">
               <div className="flex flex-col">
                 <h2 className="font-inter font-regular text-[35px]">
-                  Dashboard
+                  {scheduleTitle || "Dashboard"}
                 </h2>
                 <p className="font-inter font-light text-[15px] text-[#92959E]">
                   Lets get started with your new schedule
