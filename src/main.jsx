@@ -7,6 +7,7 @@ import Auth from "./pages/Auth/Auth.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import SideNav from "./components/SideNav.jsx";
 import TopNav from "./components/TopNav.jsx";
+import SchedulePage from "./pages/SchedulePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/app",
     element: <Dashboard />,
+  },
+  {
+    path: "/schedules/:documentId",
+    element: <SchedulePage />,
   },
 ]);
 

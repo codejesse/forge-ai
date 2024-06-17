@@ -26,7 +26,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [aiResponse, setResponse] = useState("");
 
-  //gemini api key
+  //gemini api key CHORE: Fetch uploaded api key from firebase
   const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_KEY);
 
   const navigate = useNavigate();
@@ -165,7 +165,7 @@ const Dashboard = () => {
        
        * Title: general title/name of the schedule based on the ${promptInput}
        * Event name: Name of the event based on the context of ${promptInput}
-       * Event date: date of the event from current day in MM/DD/YY format
+       * Event date: date of the event from current day in MM/DD/YY format for the current year
        * Event description: a short description of what is to be done be based on ${promptInput} for each event
        * Event start: the time the event will start
        * Event end: the time the event will end
@@ -203,31 +203,34 @@ const Dashboard = () => {
 
     const response = result.response;
 
-    console.log(response.candidates[0].content.parts[0].text);
+    // console.log(response.candidates[0].content.parts[0].text);
 
     //store data in firebase
     const collectionRef = collection(db, "schedules");
-    const data = JSON.parse(response.candidates[0].content.parts[0].text)
+    const data = JSON.parse(response.candidates[0].content.parts[0].text);
 
-    try {
-      await addDoc(collectionRef, data);
-      console.log("Document successfully written!");
-      setResponse({ response });
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error writing document: ", error);
-      setResponse({ error: "Failed to store data" });
-      setIsLoading(false);
-    }
+    addDoc(collectionRef, data)
+      .then((docRef) => {
+        console.log("Document successfully written");
+        console.log(docRef.id);
+        setResponse({ response });
+        setIsLoading(false);
+        navigate(`/schedules/${docRef.id}`);
+      })
+      .catch((error) => {
+        console.log("Error writing document: ", error);
+        setResponse({ error: "Failed to store data" });
+        setIsLoading(false);
+      });
   }
 
   /* CHORES:
-  1. Prompt: take users prompt from input field
+  1. Prompt: take users prompt from input field ✅
   2. Pre-defined prompt: when users click on a pre-defined prompt this should update the state with that data ✅
   3. Schedule creation: on submission of prompt
-       i. run the current prompt with the gemini api logic
+       i. run the current prompt with the gemini api logic ✅
        ii. grab the response and create a firebase firestore document 
-       iii. pass the response data (important parts i.e event title, event date etc) as responseData and populate the document
+       iii. pass the response data (important parts i.e event title, event date etc) as responseData and populate the document ✅
        iv. on sidebar grab the documents titles and ids and on click useParams uses the ids to grab the document data from firebase
        v. pass the data from firebase (e.g event title, data and time) to fullcallender timeline
        ---------------------------- Completion of stage one ---------------------------------------------
