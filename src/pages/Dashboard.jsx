@@ -99,6 +99,7 @@ const Dashboard = () => {
   }, []);
 
   //gemini schema: chore: further fine-tunining
+  //CHORE: Make start-time, end-time formats to be in 
   const schema = `
   {
     "description": "Event schedule information",
@@ -124,11 +125,11 @@ const Dashboard = () => {
             },
             "eventStart": {
               "type": "string",
-              "description": "Start time of the event in HH:MM format (24-hour clock)"
+              "description": "Start time of the event in 2024-09-05T09:00:00 format"
             },
             "eventEnd": {
               "type": "string",
-              "description": "End time of the event in HH:MM format (24-hour clock)"
+              "description": "End time of the event in 2024-09-05T09:00:00 format"
             },
             "eventDescription": {
               "type": "string",
