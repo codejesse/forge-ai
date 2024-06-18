@@ -111,7 +111,7 @@ const Dashboard = () => {
       },
       "eventDate": {
         "type": "string",
-        "description": "Date of the event schedule in YYYY-MM-DD format"
+        "description": "Today's date in ISO 8601 format"
       },
       "events": {
         "type": "array",
@@ -168,10 +168,10 @@ const Dashboard = () => {
        
        * Title: general title/name of the schedule based on the ${promptInput}
        * Event name: Name of the event based on the context of ${promptInput}
-       * Event date: date of the event from current day in MM/DD/YY format for the current year
+       * Event date: Today's date in ISO 8601 format
        * Event description: a short description of what is to be done be based on ${promptInput} for each event
-       * Event start: the time the event will start
-       * Event end: the time the event will end
+       * Event start: the time and current date the event will start in 2024-09-05T09:00:00 format 
+       * Event end: the time and current date the event will end in 2024-09-05T09:00:00 format
        `;
   const model = genAI.getGenerativeModel(
     {

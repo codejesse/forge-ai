@@ -56,13 +56,13 @@ const SchedulePage = () => {
                 <div className="p-3">
                   <TabGroup>
                     <TabList className="flex gap-4 bg-[#F8F9FC] w-fit px-3 py-3 rounded-full">
-                      <Tab className="rounded-full py-1 px-3 text-sm/6 font-semibold text-black focus:outline-none data-[selected]:bg-blue-500 data-[selected]:text-white">
+                      <Tab className="rounded-full py-1 px-3 text-sm/6 font-inter font-normal text-black focus:outline-none data-[selected]:bg-blue-500 data-[selected]:text-white">
                         Timeline
                       </Tab>
-                      <Tab className="rounded-full py-1 px-3 text-sm/6 font-semibold text-black focus:outline-none data-[selected]:bg-blue-500 data-[selected]:text-white">
+                      <Tab className="rounded-full py-1 px-3 text-sm/6 font-inter font-normal text-black focus:outline-none data-[selected]:bg-blue-500 data-[selected]:text-white">
                         Kanban
                       </Tab>
-                      <Tab className="rounded-full py-1 px-3 text-sm/6 font-semibold text-black focus:outline-none data-[selected]:bg-blue-500 data-[selected]:text-white">
+                      <Tab className="rounded-full py-1 px-3 text-sm/6 font-inter font-normal text-black focus:outline-none data-[selected]:bg-blue-500 data-[selected]:text-white">
                         List
                       </Tab>
                     </TabList>
