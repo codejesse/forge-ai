@@ -36,6 +36,13 @@ const SchedulePage = () => {
 
   //   console.log(scheduleTitle);
 
+  /* CHORES:
+  1. Scrollable: make the fullcalender scrollable, it doesn't fit all the days in the div
+  2. Events: Pass events to fullcalender and make sure it works
+  3. Kanban: add kanban component to ui and pass events to layout then figure out how to use it
+     for enabling users update their events status "doing" and "completed"
+   */
+
   return (
     <>
       <SideNav />

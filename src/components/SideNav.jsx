@@ -28,31 +28,34 @@ const SideNav = () => {
         <h4 className="font-inter font-medium text-[#555555] text-[15px]">
           Schedules
         </h4>
-        <ul>
-          {schedules.map((schedule) => (
-            <div className="rounded-full">
-              {/* {console.log(schedule.id)} */}
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? "font-inter active:bg-[#f8f9fc] text-black"
-                    : "font-inter bg-none text-gray-500"
-                }
-                to={`/schedules/${schedule.id}`}
-              >
-                {/* <Link to={`/schedules/${schedule.id}`}> */}
-                <li
-                  key={schedule.id}
-                  className="flex flex-row cursor-pointer text-ellipsis overflow-hidden ..."
+        {/* allow schedules to be scrollable */}
+        <div className="snap-y snap-mandatory overflow-y-scroll h-[130px]">
+          <ul>
+            {schedules.map((schedule) => (
+              <div className="rounded-full">
+                {/* {console.log(schedule.id)} */}
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-inter active:bg-[#f8f9fc] text-black"
+                      : "font-inter bg-none text-gray-500"
+                  }
+                  to={`/schedules/${schedule.id}`}
                 >
-                  <ScheduleOutlined />
-                  {schedule.scheduleTitle}
-                </li>
-                {/* </Link> */}
-              </NavLink>
-            </div>
-          ))}
-        </ul>
+                  {/* <Link to={`/schedules/${schedule.id}`}> */}
+                  <li
+                    key={schedule.id}
+                    className="flex flex-row cursor-pointer text-ellipsis overflow-hidden ..."
+                  >
+                    <ScheduleOutlined />
+                    {schedule.scheduleTitle}
+                  </li>
+                  {/* </Link> */}
+                </NavLink>
+              </div>
+            ))}
+          </ul>
+        </div>
         <hr className="mt-10" />
         <p onClick={logout} className="cursor-pointer mt-4">
           {" "}

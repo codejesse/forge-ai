@@ -232,20 +232,21 @@ const Dashboard = () => {
   2. Pre-defined prompt: when users click on a pre-defined prompt this should update the state with that data ✅
   3. Schedule creation: on submission of prompt
        i. run the current prompt with the gemini api logic ✅
-       ii. grab the response and create a firebase firestore document 
+       ii. grab the response and create a firebase firestore document ✅
        iii. pass the response data (important parts i.e event title, event date etc) as responseData and populate the document ✅
-       iv. on sidebar grab the documents titles and ids and on click useParams uses the ids to grab the document data from firebase
+       iv. on sidebar grab the documents titles and ids and on click useParams uses the ids to grab the document data from firebase ✅
        v. pass the data from firebase (e.g event title, data and time) to fullcallender timeline
+       vi. allow editing of events data such as "eventTitle", "eventStart" and "eventEnd"
        ---------------------------- Completion of stage one ---------------------------------------------
-   4. Prompt engineering: fine-tune prompt to always return the response i need and also check out edge cases
+   4. Prompt engineering: fine-tune prompt to always return the response i need and also check out edge cases ✅
        i. the user doesn't input his/her own timelines or event details; this should generate an example template in that case
-       ii. the user misses out on some event timelines; this should auto-fill such gaps with logical data
-       iii. the gemini prompt engineering should make gemini api be a "smart online scheduler for people with time management issues"
+       ii. the user misses out on some event timelines; this should auto-fill such gaps with logical data ✅
+       iii. the gemini prompt engineering should make gemini api be a "smart online scheduler for people with time management issues" ✅
        ---------------------------- beginning of stage two ----------------------------------------------
    5. Enable google calendar api: modification of the function to also add the events and data into the sign in users google calendar
        i. then a button that allows the users visit the calandar to view the schedule in the gc timeline
-   6. Build kanban: it will fetch the schedules and allow users move their task to "doing" and "completed" and also update their status on firebase
-   7. Build to do list: display schedules and also alow a radio button to mark a schedule task as completed in firebase
+   6. Schedules ownership: Fetch only the authenticated users schdules and events
+   7. Api key: small modification to allow users use their own api key (fetch from /users in firebase) as a fallback if my own api key is exhausted
       ----------------------------- incoroporate unit tests ---------------------------------------------  
   */
 
