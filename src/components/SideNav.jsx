@@ -42,15 +42,13 @@ const SideNav = () => {
                   }
                   to={`/schedules/${schedule.id}`}
                 >
-                  {/* <Link to={`/schedules/${schedule.id}`}> */}
                   <li
                     key={schedule.id}
                     className="flex flex-row cursor-pointer text-ellipsis overflow-hidden ..."
                   >
-                    <ScheduleOutlined />
+                    <ScheduleOutlined className="mr-2" />
                     {schedule.scheduleTitle}
                   </li>
-                  {/* </Link> */}
                 </NavLink>
               </div>
             ))}
@@ -59,7 +57,7 @@ const SideNav = () => {
         <hr className="mt-10" />
         <p onClick={logout} className="cursor-pointer mt-4">
           {" "}
-          <LogoutRounded />
+          <LogoutRounded className="mr-2" />
           logout
         </p>
       </div>

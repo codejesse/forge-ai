@@ -12,12 +12,16 @@ import Kanban from "../components/Kanban";
 const SchedulePage = () => {
   const { documentId } = useParams();
   const [schedule, setSchedule] = useState(null);
+//   const [events, setEvents] = useState({})
   const [scheduleTitle, setScheduleTitle] = useState("");
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(null);
 
   //events will be events from events in schedule document
-  const events = [{ title: "Meeting", start: new Date() }];
+  const events = [
+    { title: "Meeting", start: new Date() },
+    { title: "another", start: new Date() }
+];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +39,7 @@ const SchedulePage = () => {
     fetchData();
   }, [documentId, fetchSchedule]);
 
-  //   console.log(scheduleTitle);
+    console.log(schedule?.[0]?.events[0]);
 
   /* CHORES:
   1. Scrollable: make the fullcalender scrollable, it doesn't fit all the days in the div
@@ -73,7 +77,7 @@ const SchedulePage = () => {
                             plugins={[dayGridPlugin]}
                             initialView="dayGridMonth"
                             weekends={false}
-                            events={events}
+                            events={schedule?.[0]?.events[0]}
                             headerToolbar={{
                               left: "prev,next today",
                               center: "title",
