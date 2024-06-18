@@ -7,6 +7,7 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import Kanban from "../components/Kanban";
 
 const SchedulePage = () => {
   const { documentId } = useParams();
@@ -82,7 +83,9 @@ const SchedulePage = () => {
                           />
                         </div>
                       </TabPanel>
-                      <TabPanel>Kanban goes here</TabPanel>
+                      <TabPanel>
+                        <Kanban />
+                      </TabPanel>
                       <TabPanel>To do list with radio buttons</TabPanel>
                     </TabPanels>
                   </TabGroup>

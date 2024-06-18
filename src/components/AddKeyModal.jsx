@@ -121,7 +121,7 @@ export default function AddKeyModal() {
                     Add Api Key
                   </DialogTitle>
                   <p className="mt-2 font-inter text-sm/6 text-[#92959E]">
-                    You can add your own gemini api key to keep the app working
+                    You can add your own gemini api key to keep the app working.
                   </p>
                   <div className="w-full max-w-lg pb-10">
                     <Field>

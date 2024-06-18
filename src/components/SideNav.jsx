@@ -29,7 +29,7 @@ const SideNav = () => {
           Schedules
         </h4>
         {/* allow schedules to be scrollable */}
-        <div className="snap-y snap-mandatory overflow-y-scroll h-[130px]">
+        <div className="snap-y snap-mandatory overflow-y-scroll h-[150px]">
           <ul>
             {schedules.map((schedule) => (
               <div className="rounded-full">
