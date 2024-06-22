@@ -11,13 +11,14 @@ import Kanban from "../components/Kanban";
 
 const SchedulePage = () => {
   const { documentId } = useParams();
-  const [schedule, setSchedule] = useState(null);
+  const [schedule, setSchedule] = useState({});
 //   const [events, setEvents] = useState({})
   const [scheduleTitle, setScheduleTitle] = useState("");
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(null);
 
   //events will be events from events in schedule document
+  //Question: does the schedule state look like this?
   const events = [
     { title: "Meeting", start: new Date() },
     { title: "another", start: new Date() }
@@ -39,7 +40,7 @@ const SchedulePage = () => {
     fetchData();
   }, [documentId, fetchSchedule]);
 
-    console.log(schedule?.[0]?.events[0]);
+    console.log(schedule[0]?.events);
 
   /* CHORES:
   1. Scrollable: make the fullcalender scrollable, it doesn't fit all the days in the div
@@ -77,7 +78,7 @@ const SchedulePage = () => {
                             plugins={[dayGridPlugin]}
                             initialView="dayGridMonth"
                             weekends={false}
-                            events={schedule?.[0]?.events[0]}
+                            events={schedule[0]?.events}
                             headerToolbar={{
                               left: "prev,next today",
                               center: "title",

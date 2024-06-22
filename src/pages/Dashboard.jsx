@@ -119,17 +119,17 @@ const Dashboard = () => {
         "items": {
           "type": "object",
           "properties": {
-            "eventName": {
+            "title": {
               "type": "string",
-              "description": "Name of the event"
+              "description": "short title of the event"
             },
-            "eventStart": {
+            "start": {
               "type": "string",
-              "description": "Start time of the event in 2024-09-05T09:00:00 format"
+              "description": "Start time of the event in ISO 8601 format"
             },
-            "eventEnd": {
+            "end": {
               "type": "string",
-              "description": "End time of the event in 2024-09-05T09:00:00 format"
+              "description": "End time of the event in ISO 8601 format format"
             },
             "eventDescription": {
               "type": "string",
@@ -146,8 +146,8 @@ const Dashboard = () => {
           },
           "required": [
             "eventName",
-            "eventStart",
-            "eventEnd"
+            "start",
+            "end"
           ]
         }
       }
@@ -163,15 +163,15 @@ const Dashboard = () => {
 
   //gemini prompt
   const si = `
-       You are a time management expert and you are to create a schedule timeline based on ${promptInput}.
+       You are a time management expert and you are to create a professional schedule timeline based on ${promptInput}.
        your response will be used to create a firebase document and then into the reactjs fullcalender draggeable calender timeline so therefore your response must be valid JSON that can be used in firebase firestore documents it must have the following schema:
        
        * Title: general title/name of the schedule based on the ${promptInput}
        * Event name: Name of the event based on the context of ${promptInput}
        * Event date: Today's date in ISO 8601 format
        * Event description: a short description of what is to be done be based on ${promptInput} for each event
-       * Event start: the time and current date the event will start in 2024-09-05T09:00:00 format 
-       * Event end: the time and current date the event will end in 2024-09-05T09:00:00 format
+       * Event start: the time and current date the event will start in ISO 8601 format 
+       * Event end: the time and current date the event will end in ISO 8601 format
        `;
   const model = genAI.getGenerativeModel(
     {
